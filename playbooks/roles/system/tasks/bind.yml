@@ -1,0 +1,44 @@
+---
+  - name: Bind Setup | Service
+    block:
+      - name: Bind Setup | Service | Take Backup
+        copy: 
+          src: /etc/bind
+          dest: /etc/bind_org
+          remote_src: yes 
+          directory_mode: yes
+        become: true
+      - name: Bind Setup | Service | Upload new configs # best way to setup bind: https://docs.ansible.com/ansible/2.3/nsupdate_module.html
+        copy:
+          src: "{{ item }}"
+          dest: /etc/bind/
+          backup: yes
+        become: true
+        notify: "bind service restart"
+        with_items:
+          - bind/named.conf.default-zones
+          - bind/named.conf.options
+          - bind/jackson.forward
+          - bind/jackson.reverse
+
+  - name: Resolvconf Setup | Service
+    block:
+      - name: Resolvconf Setup | Service | Configure head nameservers
+        copy:
+          dest: "/etc/resolvconf/resolv.conf.d/head"
+          content: |
+            nameserver 192.168.1.5
+            nameserver 127.0.0.1
+        become: true
+      - name: Resolvconf Setup | Service | Configure tails nameservers
+        copy:
+          dest: "/etc/resolvconf/resolv.conf.d/tail"
+          content: |
+            nameserver 8.8.8.8
+            nameserver 8.8.4.4
+            nameserver 4.4.4.4
+        become: true
+      - name: Resolvconf Setup | Service | Update resolv.conf file
+        shell: "resolvconf -u"
+        become: true
+        notify: "resolvconf service restart"

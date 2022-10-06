@@ -1,0 +1,44 @@
+---
+  - name: Restart and enable SSH Service
+    systemd:
+      name: ssh
+      state: restarted
+      enabled: true
+    become: true
+    listen: "restart ssh service"
+
+  - name: Restart and enable Docker Service
+    systemd:
+      name: docker
+      state: restarted
+      enabled: true
+      daemon_reload: yes
+    become: true
+    listen: "docker service restart"
+
+  - name: Restart and enable Containerd Service
+    systemd:
+      name: containerd
+      state: restarted
+      enabled: true
+      daemon_reload: yes
+    become: true
+    listen: "containerd service restart"
+
+  - name: Restart and enable Bind Service
+    systemd:
+      name: bind9
+      state: restarted
+      enabled: true
+      daemon_reload: yes
+    become: true
+    listen: "bind service restart"
+
+  - name: Restart and enable Resolvconf Service
+    systemd:
+      name: resolvconf
+      state: restarted
+      enabled: true
+      daemon_reload: yes
+    become: true
+    listen: "resolvconf service restart"

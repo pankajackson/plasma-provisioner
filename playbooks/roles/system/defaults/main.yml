@@ -1,0 +1,72 @@
+---
+# defaults file for basic
+  applications:
+    repos:
+      - gpgurl: "https://download.docker.com/linux/ubuntu/gpg"
+        keyring: "/etc/apt/keyrings/docker.gpg"
+        repo: "deb [arch={{ deb_architecture.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        filename: "/etc/apt/sources.list.d/docker"
+      - gpgurl: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+        keyring: "/usr/share/keyrings/kubernetes-archive-keyring.gpg"
+        repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+        filename: "/etc/apt/sources.list.d/kubernetes"
+      - gpgurl: "https://dl-ssl.google.com/linux/linux_signing_key.pub"
+        keyring: "/usr/share/keyrings/google-chrome.gpg"
+        repo: "deb [arch={{ deb_architecture.stdout }} signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main"
+        filename: "/etc/apt/sources.list.d/google-chrome"
+    apps:
+      - python3
+      - python3-pip
+      - python-is-python3
+      - net-tools
+      - dnsutils
+      - iputils-ping
+      - bind9
+      - resolvconf
+      - vim
+      - git
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gcp
+      - htop
+      - toilet
+      - lolcat
+      - figlet
+      - fortune
+      - cowsay
+      - neofetch
+      - kubectl
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+      - snapd
+      - keepassxc
+      - google-chrome-stable
+      - pinta
+      - yakuake
+      - plasma-workspace-wallpapers
+      - rar
+      - unrar
+      - zip
+      - unzip
+      - okular
+      - awscli
+      - smplayer
+      - vlc
+      - mpv
+
+#      - virtualbox
+#      - virtualbox-dkms
+#      - virtualbox-ext-pack
+      - vagrant
+    snap:
+      - name: spotify
+        classic: no
+
+  host:
+    hostname: jackson.com
+
+  docker:
+    data_dir: "/var/lib/docker"

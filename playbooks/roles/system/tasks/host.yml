@@ -1,0 +1,75 @@
+---
+  - name: Host Setup | Hostname
+    block:
+      - name: Host Setup | Hostname | Reset
+        hostname:
+          name: "{{ host.hostname }}"
+        become: true
+
+
+  - name: Host Setup | Sudoers
+    block:
+      - name: Host Setup | Sudoers | Passwordless Sudo
+        lineinfile:
+          path: /etc/sudoers
+          state: present
+          regexp: "^{{ ansible_user_id }}"
+          line: "{{ ansible_user_id }} ALL=(ALL) NOPASSWD: ALL"
+          validate: 'visudo -cf %s'
+        become: true
+
+
+  - name: Host Setup | Login Banner
+    block:
+      - name: Host Setup | Login Banner | Configure
+        lineinfile:
+          dest: /etc/ssh/sshd_config
+          regexp: 'Banner'
+          line: "Banner /etc/issue.net"
+        become: true
+      - name: Host Setup | Login Banner | Update ssh banner
+        shell: |
+          toilet -f term  -w 102 'Welcome to ....' | tee /etc/issue > /etc/issue.net > /etc/motd
+          toilet -f mono12 -F border -w 500 "{{ host.hostname | upper }}" | tee -a /etc/issue >> /etc/issue.net >> /etc/motd
+          toilet -f term  -w 102 "$(hostname)" | tee -a /etc/issue >> /etc/issue.net >> /etc/motd
+          toilet -f term  -w 102 'ALERT! You are entering into a secured area! Your IP, Login Time, Username has been noted and has been sent to the server administrator! This service is restricted to authorized users only. All activities on this system are logged. Unauthorized access will be fully investigated and reported to the appropriate law enforcement agencies.' | tee -a /etc/issue >> /etc/issue.net >> /etc/motd
+        become: true
+        notify: "restart ssh service"
+
+
+  - name: Host Setup | Disk
+    block:
+      - name: Host Setup | Disk | Get fs Details
+        set_fact:
+          root_fs: "{{ item.fstype }}"
+          root_device: "{{ item.device }}"
+        with_items: "{{ ansible_facts.mounts }}"
+        when: item.mount == "/"
+      - name: Host Setup | Disk | Update xfs Root label
+        shell: xfs_io -c "label -s ROOT" /
+        become: true
+        when: root_fs == "xfs"
+      - name: Host Setup | Disk | Update ext Root label
+        shell: "e2label {{ root_device }} ROOT"
+        become: true
+        when: ( root_fs == "ext2" ) or ( root_fs == "ext3" ) or ( root_fs == "ext4" )
+
+  - name: Host Setup | User
+    block:
+      - name: Host Setup | User | Check User bashrc
+        lineinfile:
+          state: absent
+          path: "~/.bashrc"
+          regexp: "^neofetch"
+        check_mode: true
+        changed_when: false
+        register: check
+
+      - name: Host Setup | User | Update User bashrc
+        lineinfile:
+          state: present
+          path: "~/.bashrc"
+          line: "neofetch --ascii_distro Sparky | lolcat && fortune | cowsay | lolcat"
+          insertafter: EOF
+        when: check.found == 0
+

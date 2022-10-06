@@ -1,0 +1,11 @@
+---
+  - name: Cleanup
+    include_tasks: cleanup.yml
+  - name: Application Setup
+    include_tasks: applications.yml
+  - name: Host Setup
+    include_tasks: host.yml
+  - name: Docker Setup
+    include_tasks: docker.yml
+  - name: Bind Setup
+    include_tasks: bind.yml

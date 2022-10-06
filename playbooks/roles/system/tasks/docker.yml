@@ -1,0 +1,28 @@
+---
+  - name: Docker Setup | Service
+    block:
+      - name: Docker Configuration | Configure data path of docker
+        copy:
+          dest: "/etc/docker/daemon.json"
+          content: |
+            {
+               "data-root": "{{ docker.data_dir }}"
+            }
+        become: true
+        notify: "docker service restart"
+
+  - name: Docker Setup | Containerd Configuration
+    block:
+      - name: Docker Setup | Containerd Configuration | Backup containerd config file
+        copy:
+          remote_src: true
+          src: /etc/containerd/config.toml
+          dest: /etc/containerd/config.toml.bkp
+        become: true
+      - name: Docker Setup | Containerd Configuration | Configure containerd config file
+        shell: |
+          mkdir -p /etc/containerd
+          containerd config default > /etc/containerd/config.toml
+          sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+        become: true
+        notify: "containerd service restart"

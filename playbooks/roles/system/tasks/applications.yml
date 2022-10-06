@@ -1,0 +1,39 @@
+---
+  - name: Applications | Repo Configuration
+    block:
+      - name: Applications | Repo Configuration | Get DEB architecture
+        shell: dpkg --print-architecture
+        register: deb_architecture
+
+      - name: Applications | Repo Configuration | Add repository key
+        apt_key:
+          url: "{{ item.gpgurl }}"
+          keyring: "{{ item.keyring }}"
+          state: present
+        become: true
+        when: item.gpgurl is defined
+        with_items: "{{ applications.repos }}"
+
+      - name: Applications | Repo Configuration | Add repository
+        apt_repository:
+          repo: "{{ item.repo }}"
+          filename: "{{ item.filename }}"
+          state: present
+        become: true
+        when: item.repo is defined
+        with_items: "{{ applications.repos }}"
+
+  - name: Applications | Installation
+    block:
+      - name: Applications | Installation | APT Apps
+        apt:
+          pkg: "{{ applications.apps }}"
+          update_cache: yes
+        become: true
+
+      - name: Applications | Installation | Snap Apps
+        snap:
+          name: "{{ item.name }}"
+          classic: "{{ item.classic }}"
+        become: true
+        with_items: "{{ applications.snap }}"
