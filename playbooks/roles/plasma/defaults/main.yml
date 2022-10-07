@@ -1,0 +1,28 @@
+---
+# defaults file for plasma
+orchis:
+  apps:
+    - cmake
+    - extra-cmake-modules
+    - g++
+    - qtbase5-dev
+    - qtdeclarative5-dev
+    - libqt5x11extras5-dev
+    - libkf5plasma-dev
+    - libkf5globalaccel-dev
+    - libkf5xmlgui-dev
+    - qt5-style-kvantum
+    - qt5-style-kvantum-themes
+    - gnome-themes-standard
+    - gtk2-engines-murrine
+    - sassc
+    - latte-dock
+    - conky-all
+    - zsh
+  profile:
+    name: "Orchis-with-sddm-local"
+    file: "Orchis-with-sddm-local.plsv"
+    path: "/tmp/plasma_profiles/"
+    url: "https://mega.nz/file/mDoGkJxC#SiLxPSOYOBYLEDnP-PuxpVUWeKxtGHDIvyES1cTXZBE"
+    checksum: 16ad6f9c1fc025e2f7ab794988a4ed72
+    checksum_algorithm: md5

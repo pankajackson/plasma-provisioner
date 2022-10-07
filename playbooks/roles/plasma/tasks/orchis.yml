@@ -1,0 +1,177 @@
+---
+  - name: Orchis | Dependencies
+    block:
+      - name: Orchis | Dependencies | Install
+        apt:
+          pkg: "{{ orchis.apps }}"
+          update_cache: yes
+        become: true
+
+  - name: Orchis | Binary
+    block:
+      - name: Orchis | Binary | Install
+        copy:
+          src: "{{ item }}"
+          dest: /usr/bin/
+          mode: a+x
+          backup: yes
+        become: true
+        with_items:
+          - orchis/binary/ksetwallpaper
+          - orchis/binary/WallpaperChanger
+
+  - name: Orchis | Kservices
+    block:
+      - name: Orchis | Kservices | Gather Path
+        shell: |
+          echo "$(kf5-config --path services):"  | awk -F ':' '{ print $1 }'
+        register: path_kservices
+
+      - name: Orchis | Kservices | Create Directory
+        file:
+          path: "{{ path_kservices.stdout }}"
+          state: directory
+          recurse: yes
+
+      - name: Orchis | Kservices | Upload Services
+        copy:
+          src: "{{ item }}"
+          dest: "{{ path_kservices.stdout }}"
+          backup: yes
+        with_items:
+          - orchis/kservices/SetAsWallpaperBlur.desktop
+          - orchis/kservices/SetAsWallpaper.desktop
+
+  - name: Orchis | Kwinscripts
+    block:
+      - name: Orchis | Kwinscripts | Upload scripts
+        copy:
+          src: "{{ item }}"
+          dest: "/tmp"
+        with_items:
+          - orchis/kwinscripts/forceblur-0.5.kwinscript
+          - orchis/kwinscripts/window-colors-0.2.kwinscript
+
+      - name: Orchis | Kwinscripts | Install scripts
+        shell: |
+          plasmapkg2 -t KWin/Script -i {{ item }} || plasmapkg2 -t KWin/Script -u {{ item }}
+        with_items:
+          - /tmp/forceblur-0.5.kwinscript
+          - /tmp/window-colors-0.2.kwinscript
+
+      - name: Orchis | Kwinscripts | Clean scripts
+        file:
+          path: "{{ item }}"
+          state: absent
+        with_items:
+          - /tmp/forceblur-0.5.kwinscript
+          - /tmp/window-colors-0.2.kwinscript
+
+  - name: Orchis | Plugin
+    block:
+      - name: Orchis | Kwinscripts | Upload Plugin
+        copy:
+          src: "{{ item }}"
+          dest: "/tmp"
+        with_items:
+          - orchis/plugin/inactiveblur-v5.zip
+
+      - name: Orchis | Kwinscripts | Install Plugin
+        shell: |
+          plasmapkg2 -t Plasma/Wallpaper -i {{ item }} || plasmapkg2 -t Plasma/Wallpaper -u {{ item }}
+        with_items:
+          - /tmp/inactiveblur-v5.zip
+
+      - name: Orchis | Kwinscripts | Clean Plugin
+        file:
+          path: "{{ item }}"
+          state: absent
+        with_items:
+          - /tmp/inactiveblur-v5.zip
+
+  - name: Orchis | Plasmasaver
+    block:
+      - name: Orchis | Plasmasaver | Create tmp Dir
+        file:
+          path: "{{ orchis.profile.path }}"
+          state: directory
+          owner: "{{ ansible_env.USER }}"
+        become: true
+
+      - name: Orchis | Plasmasaver | Check if {{ orchis.profile.name }} Profile Downloaded
+        stat:
+          path: "{{ orchis.profile.path }}/{{ orchis.profile.file }}"
+          checksum_algorithm: "{{ orchis.profile.checksum_algorithm }}"
+        register: profile_stat
+
+      - name: Orchis | Plasmasaver | Download Profile
+        shell: |
+          cd {{ orchis.profile.path }}
+          mv {{ orchis.profile.file }} {{ ansible_date_time.epoch }}-{{ orchis.profile.file }}
+          megadl {{ orchis.profile.url }}
+        when: (profile_stat.stat.checksum is not defined) or (profile_stat.stat.checksum != orchis.profile.checksum)
+
+      - name: Orchis | Plasmasaver | Check if {{ orchis.profile.name }} Profile Exist
+        shell: |
+          plasmasaver list |  awk '{ print $2}' | grep -x {{ orchis.profile.name }}
+        register: profile
+        failed_when: false
+        changed_when: false
+
+      - name: Orchis | Plasmasaver | Import Profile
+        shell: "plasmasaver import {{ orchis.profile.path }}/{{ orchis.profile.file }} -p DUMMY_PASSWORD"
+        when: (profile_stat.stat.checksum is not defined) or (profile_stat.stat.checksum != orchis.profile.checksum) or (profile.stdout != orchis.profile.name)
+
+      - name: Orchis | Plasmasaver | Apply Profile
+        shell: "plasmasaver apply {{ orchis.profile.name }} -p DUMMY_PASSWORD"
+
+  - name: Orchis | Virtual Desktop Bar
+    block:
+      - name: Orchis | Virtual Desktop Bar | Upload src
+        copy:
+          src: "orchis/others/virtual_desktop_bar.tar.bz2"
+          dest: "/tmp/"
+
+  - name: Orchis | Virtual Desktop Bar
+    block:
+      - name: Orchis | Virtual Desktop Bar | Install
+        shell: |
+          cd /tmp/
+          tar xvf virtual_desktop_bar.tar.bz2
+          cd virtual_desktop_bar
+          chmod +x scripts/*
+          ./scripts/install-dependencies-ubuntu.sh
+          ./scripts/install-applet.sh
+
+      - name: Orchis | Virtual Desktop Bar | Clean
+        file:
+          path: "{{ item }}"
+          state: absent
+        with_items:
+          - "/tmp/virtual_desktop_bar"
+          - "/tmp/virtual_desktop_bar.tar.bz2"
+
+  - name: Orchis | Conky
+    block:
+      - name: Orchis | Conky | Provide script permission
+        file:
+          path: "~/.conky/Antares/start_conky.sh"
+          mode: "a+x"
+
+      - name: Orchis | Conky | Enable AutoStart
+        file:
+          src: "~/.conky/Antares/start_conky.sh"
+          dest: "~/.config/autostart-scripts/start_conky.sh"
+          state: link
+
+  - name: Orchis | User
+    block:
+      - name: Orchis | User | Zsh Shell bin path
+        shell: which zsh
+        register: zsh_bin
+
+      - name: Orchis | User | Update Shell
+        become: yes
+        user:
+          name: "{{ ansible_env.USER }}"
+          shell: "{{ zsh_bin.stdout }}"

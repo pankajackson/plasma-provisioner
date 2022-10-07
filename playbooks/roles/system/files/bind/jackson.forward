@@ -34,5 +34,3 @@ notary	IN	CNAME	ingress.jackson.com.
 hub	IN	CNAME	ingress.jackson.com.
 grafana	IN	CNAME	ingress.jackson.com.
 prometheus	IN	CNAME	ingress.jackson.com.
-tookmoney	IN	A	10.0.0.40
-nginxapp	IN	CNAME	ingress.jackson.com.	

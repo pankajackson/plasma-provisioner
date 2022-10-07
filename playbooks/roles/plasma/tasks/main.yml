@@ -1,0 +1,5 @@
+---
+  - name: Host Setup
+    include_tasks: host.yml
+  - name: Orchis Theme Setup
+    include_tasks: orchis.yml

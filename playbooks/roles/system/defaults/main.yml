@@ -14,6 +14,14 @@
         keyring: "/usr/share/keyrings/google-chrome.gpg"
         repo: "deb [arch={{ deb_architecture.stdout }} signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main"
         filename: "/etc/apt/sources.list.d/google-chrome"
+      - gpgurl: "https://apt.releases.hashicorp.com/gpg"
+        keyring: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
+        repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+        filename: "/etc/apt/sources.list.d/hashicorp"
+      - gpgurl: "https://mega.nz/keys/MEGA_signing.key"
+        keyring: "/usr/share/keyrings/megasync.gpg"
+        repo: "deb [signed-by=/usr/share/keyrings/megasync.gpg] https://mega.nz/linux/MEGAsync/xUbuntu_21.04/ ./"
+        filename: "/etc/apt/sources.list.d/megasync"
     apps:
       - python3
       - python3-pip
@@ -27,6 +35,8 @@
       - git
       - apt-transport-https
       - ca-certificates
+      - gnupg
+      - software-properties-common
       - curl
       - gcp
       - htop
@@ -37,6 +47,7 @@
       - cowsay
       - neofetch
       - kubectl
+      - terraform
       - docker-ce
       - docker-ce-cli
       - containerd.io
@@ -56,6 +67,7 @@
       - smplayer
       - vlc
       - mpv
+      - megatools
 
 #      - virtualbox
 #      - virtualbox-dkms
@@ -64,6 +76,10 @@
     snap:
       - name: spotify
         classic: no
+    helm_version: "v3.9.0"
+    helmfile_version: "v0.144.0"
+    sops_version: "3.7.1"
+    helm_secrets_version: "3.12.0"
 
   host:
     hostname: jackson.com
