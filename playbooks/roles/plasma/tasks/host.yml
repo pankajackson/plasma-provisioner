@@ -13,3 +13,25 @@
         become: true
       - name: Host Setup | Plasmasaver | Save Default Profile
         shell: "plasmasaver save default"
+
+  - name: Host Setup | PSLV Profile Downloader
+    block:
+      - name: Host Setup | PSLV Profile Downloader | Repo key Setup
+        apt_key:
+          url: "https://mega.nz/keys/MEGA_signing.key"
+          keyring: "/usr/share/keyrings/megasync.gpg"
+          state: present
+        become: true
+
+      - name: Host Setup | PSLV Profile Downloader | Repo Setup
+        apt_repository:
+          repo: "deb [signed-by=/usr/share/keyrings/megasync.gpg] https://mega.nz/linux/MEGAsync/xUbuntu_21.04/ ./"
+          filename: "/etc/apt/sources.list.d/megasync"
+          state: present
+        become: true
+
+      - name: Host Setup | PSLV Profile Downloader | Install
+        apt:
+          pkg: "megatools"
+          update_cache: yes
+        become: true
