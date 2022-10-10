@@ -180,15 +180,20 @@ conf_others = {
     }
 }
 
-if not os.path.exists(plasmasaver_config_file_path):
-    if os.path.expandvars("$XDG_CURRENT_DESKTOP") == "KDE":
-        conf = conf_kde
-        with open(plasmasaver_config_file_path, 'w') as outfile:
-            yaml.dump(conf, outfile, default_flow_style=False)
-    else:
-        conf = conf_others
-        with open(plasmasaver_config_file_path, 'w') as outfile:
-            yaml.dump(conf, outfile, default_flow_style=False)
+def conf_initializer(env="NONE"):
+    if not os.path.exists(plasmasaver_config_file_path) or (env and (env != "NONE")):
+        if os.path.expandvars("$XDG_CURRENT_DESKTOP") == "KDE" or env.upper() == "KDE":
+            conf = conf_kde
+            with open(plasmasaver_config_file_path, 'w') as outfile:
+                yaml.dump(conf, outfile, default_flow_style=False)
+        else:
+            print(
+                f"plasmasaver: Unknown Desktop environment, please use \"-e\"/\"--env\" to specify environment with \"save\" command to initialize base config."
+            )
+            conf = conf_others
+            with open(plasmasaver_config_file_path, 'w') as outfile:
+                yaml.dump(conf, outfile, default_flow_style=False)
+    return plasmasaver_config_file_path
 
 def exception_handler(func):
     def inner_func(*args, **kwargs):
@@ -674,6 +679,14 @@ def _get_parser() -> argparse.ArgumentParser:
         metavar="<path>",
     )
     save_parser.add_argument(
+        "-e",
+        "--env",
+        required=False,
+        type=str,
+        help="Desktop environment (e.g. kde)",
+        metavar="<env>",
+    )
+    save_parser.add_argument(
         "-p",
         "--password",
         required=False,
@@ -859,6 +872,7 @@ def main():
     skip_sudo = False
     global sudo_pass
     sudo_pass = None
+    conf_initializer()
 
     if args.action == 'save':
         if args.password and args.skip_sudo:
@@ -869,6 +883,8 @@ def main():
             sudo_pass = args.password
         if (args.sddm_only and args.include_sddm) or (args.sddm_only and args.include_global):
             raise Exception('error: --sddm-only can\'t be used with --include-sddm and --include-global')
+        if args.env:
+            conf_initializer(args.env)
         if args.config_file:
             if not os.path.exists(args.config_file):
                 raise Exception(

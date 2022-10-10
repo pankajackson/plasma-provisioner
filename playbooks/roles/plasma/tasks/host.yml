@@ -12,7 +12,7 @@
           backup: yes
         become: true
       - name: Host Setup | Plasmasaver | Save Default Profile
-        shell: "plasmasaver save default"
+        shell: "plasmasaver save -e kde default"
 
   - name: Host Setup | PSLV Profile Downloader
     block:
