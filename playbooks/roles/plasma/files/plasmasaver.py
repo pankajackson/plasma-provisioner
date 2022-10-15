@@ -894,7 +894,7 @@ def main():
                     'error: invalid config file path, The path given in arg doesn\'t exist or is not accessible: %s' % args.config_file)
             with open(args.config_file, 'r') as configs:
                 e_conf = yaml.safe_load(configs)
-                if not 'export' in e_conf.keys() or not 'save' in e_conf.keys():
+                if 'export' not in e_conf.keys() or 'save' not in e_conf.keys():
                     raise Exception(
                         'error: missing config block(s), "save" and "export" are core blocks of plasmasaver configuration')
             if e_conf:
