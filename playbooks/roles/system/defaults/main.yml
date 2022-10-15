@@ -36,6 +36,7 @@
       - curl
       - gcp
       - htop
+      - cmatrix
       - toilet
       - lolcat
       - figlet
@@ -71,6 +72,8 @@
     snap:
       - name: spotify
         classic: no
+    pip:
+      - kube-shell
     helm_version: "v3.9.0"
     helmfile_version: "v0.144.0"
     sops_version: "3.7.1"

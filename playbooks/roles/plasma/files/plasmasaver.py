@@ -47,118 +47,118 @@ length_of_lop = len(list_of_profiles)
 version = 0.1
 
 conf_kde = {
-	"export": {
-		"home_folder": {
-			"entries": [
-				".fonts",
-				".themes",
-				".icons",
-				".wallpapers",
-				".conky",
-				".zsh",
-				".bin",
-				"bin"
-			],
-			"location": "$HOME/"
-		},
-		"plasma_saver": {
-			"entries": [
-				"profiles"
-			],
-			"location": "$PLASMA_SAVER_DIR"
-		},
-		"sddm": {
-			"entries": [
-				"themes"
-			],
-			"location": "$SDDM_DIR"
-		},
-		"root_share_folder": {
-			"entries": [
-				"plasma",
-				"kwin",
-				"konsole",
-				"fonts",
-				"kfontinst",
-				"color-schemes",
-				"aurorae",
-				"icons",
-				"wallpapers",
-				"Kvantum",
-				"themes"
-			],
-			"location": "$ROOT_SHARE_DIR"
-		},
-		"share_folder": {
-			"entries": [
-				"plasma",
-				"kwin",
-				"konsole",
-				"fonts",
-				"kfontinst",
-				"color-schemes",
-				"aurorae",
-				"icons",
-				"wallpapers"
-			],
-			"location": "$SHARE_DIR"
-		}
-	},
-	"save": {
-		"home_folder": {
-			"entries": [
-				".zshrc",
-				".p10k.zsh"
-			],
-			"location": "$HOME/"
-		},
-		"app_layouts": {
-			"entries": [
-				"dolphin",
-				"konsole"
-			],
-			"location": "$HOME/.local/share/kxmlgui5"
-		},
-		"configs": {
-			"entries": [
-				"gtk-2.0",
-				"gtk-3.0",
-				"gtk-4.0",
-				"Kvantum",
-				"latte",
-				"dolphinrc",
-				"konsolerc",
-				"kcminputrc",
-				"kdeglobals",
-				"kglobalshortcutsrc",
-				"klipperrc",
-				"krunnerrc",
-				"kscreenlockerrc",
-				"ksmserverrc",
-				"kwinrc",
-				"kwinrulesrc",
-				"plasma-org.kde.plasma.desktop-appletsrc",
-				"plasmarc",
-				"plasmashellrc",
-				"gtkrc",
-				"gtkrc-2.0",
-				"lattedockrc",
-				"breezerc",
-				"oxygenrc",
-				"lightlyrc",
-				"ksplashrc",
-				"khotkeysrc",
-				"autostart"
-			],
-			"location": "$CONFIG_DIR"
-		},
-		"sddm_configs": {
-			"entries": [
-				"sddm.conf.d"
-			],
-			"location": "$SYS_CONFIG_DIR"
-		}
-	}
+    "export": {
+        "home_folder": {
+            "entries": [
+                ".fonts",
+                ".themes",
+                ".icons",
+                ".wallpapers",
+                ".conky",
+                ".zsh",
+                ".bin",
+                "bin"
+            ],
+            "location": "$HOME/"
+        },
+        "plasma_saver": {
+            "entries": [
+                "profiles"
+            ],
+            "location": "$PLASMA_SAVER_DIR"
+        },
+        "sddm": {
+            "entries": [
+                "themes"
+            ],
+            "location": "$SDDM_DIR"
+        },
+        "root_share_folder": {
+            "entries": [
+                "plasma",
+                "kwin",
+                "konsole",
+                "fonts",
+                "kfontinst",
+                "color-schemes",
+                "aurorae",
+                "icons",
+                "wallpapers",
+                "Kvantum",
+                "themes"
+            ],
+            "location": "$ROOT_SHARE_DIR"
+        },
+        "share_folder": {
+            "entries": [
+                "plasma",
+                "kwin",
+                "konsole",
+                "fonts",
+                "kfontinst",
+                "color-schemes",
+                "aurorae",
+                "icons",
+                "wallpapers"
+            ],
+            "location": "$SHARE_DIR"
+        }
+    },
+    "save": {
+        "home_folder": {
+            "entries": [
+                ".zshrc",
+                ".p10k.zsh"
+            ],
+            "location": "$HOME/"
+        },
+        "app_layouts": {
+            "entries": [
+                "dolphin",
+                "konsole"
+            ],
+            "location": "$HOME/.local/share/kxmlgui5"
+        },
+        "configs": {
+            "entries": [
+                "gtk-2.0",
+                "gtk-3.0",
+                "gtk-4.0",
+                "Kvantum",
+                "latte",
+                "dolphinrc",
+                "konsolerc",
+                "kcminputrc",
+                "kdeglobals",
+                "kglobalshortcutsrc",
+                "klipperrc",
+                "krunnerrc",
+                "kscreenlockerrc",
+                "ksmserverrc",
+                "kwinrc",
+                "kwinrulesrc",
+                "plasma-org.kde.plasma.desktop-appletsrc",
+                "plasmarc",
+                "plasmashellrc",
+                "gtkrc",
+                "gtkrc-2.0",
+                "lattedockrc",
+                "breezerc",
+                "oxygenrc",
+                "lightlyrc",
+                "ksplashrc",
+                "khotkeysrc",
+                "autostart"
+            ],
+            "location": "$CONFIG_DIR"
+        },
+        "sddm_configs": {
+            "entries": [
+                "sddm.conf.d"
+            ],
+            "location": "$SYS_CONFIG_DIR"
+        }
+    }
 }
 
 conf_others = {
@@ -180,6 +180,7 @@ conf_others = {
     }
 }
 
+
 def conf_initializer(env="NONE"):
     if not os.path.exists(plasmasaver_config_file_path) or (env and (env != "NONE")):
         if os.path.expandvars("$XDG_CURRENT_DESKTOP") == "KDE" or env.upper() == "KDE":
@@ -194,6 +195,7 @@ def conf_initializer(env="NONE"):
             with open(plasmasaver_config_file_path, 'w') as outfile:
                 yaml.dump(conf, outfile, default_flow_style=False)
     return plasmasaver_config_file_path
+
 
 def exception_handler(func):
     def inner_func(*args, **kwargs):
@@ -216,6 +218,7 @@ def exception_handler(func):
             return function
 
     return inner_func
+
 
 def ends_with(grouped_regex, path) -> str:
     occurence = re.search(grouped_regex, path).group()
@@ -325,7 +328,7 @@ def get_sudo_pass(file, sudo_max_attempts=3):
         log('Error: bad input')
         if sudo_max_attempts > 0:
             log('Error: Input limit exceed')
-            return get_sudo_pass(file, sudo_max_attempts=sudo_max_attempts-1)
+            return get_sudo_pass(file, sudo_max_attempts=sudo_max_attempts - 1)
         else:
             return None
 
@@ -381,6 +384,7 @@ def copy(source, dest):
                     else:
                         temp_pass = get_sudo_pass(dest)
                         subprocess.check_output('echo %s|sudo -S %s; echo $? ' % (temp_pass, command), shell=True)
+
 
 @exception_handler
 def read_plasmasaver_config(config_file=plasmasaver_config_file_path) -> dict:
@@ -488,7 +492,8 @@ def remove_profile(profile_name, profile_list, profile_count):
 
 
 @exception_handler
-def export(profile_name, profile_list, profile_count, skip_global=False, skip_sddm=False, sddm_only=False, config_only=False, data_only=False):
+def export(profile_name, profile_list, profile_count, skip_global=False, skip_sddm=False, sddm_only=False,
+           config_only=False, data_only=False):
     # assert
     assert profile_count != 0, "No profile saved yet."
     assert profile_name in profile_list, "Profile not found."
@@ -502,7 +507,6 @@ def export(profile_name, profile_list, profile_count, skip_global=False, skip_sd
         shuffle(rand_str)
         export_path = export_path + "".join(rand_str)
     mkdir(export_path)
-
 
     # compressing the files as zip
     log("Exporting profile. It might take a minute or two...")
@@ -563,7 +567,7 @@ def export(profile_name, profile_list, profile_count, skip_global=False, skip_sd
 def import_profile(path, skip_global=False, skip_sddm=False, sddm_only=False, config_only=False, data_only=False):
     # assert
     assert (
-        is_zipfile(path) and path[-5:] == EXPORT_EXTENSION
+            is_zipfile(path) and path[-5:] == EXPORT_EXTENSION
     ), "Not a valid plasmasaver file"
     item = os.path.basename(path)[:-5]
     assert not os.path.exists(
@@ -586,7 +590,7 @@ def import_profile(path, skip_global=False, skip_sddm=False, sddm_only=False, co
     if data_only:
         plasmasaver_config.pop('save', None)
     if config_only:
-        plasmasaver_config.pop('export',None)
+        plasmasaver_config.pop('export', None)
     if skip_sddm:
         plasmasaver_config['export'].pop('sddm', None)
         plasmasaver_config['save'].pop('sddm_configs', None)
@@ -636,7 +640,6 @@ def wipe():
         log("Removed all profiles!")
     else:
         log("Aborting...")
-
 
 
 def _get_parser() -> argparse.ArgumentParser:
@@ -859,8 +862,8 @@ def _get_parser() -> argparse.ArgumentParser:
         help="Skip all sudo operations",
     )
 
-
     return parser
+
 
 @exception_handler
 def main():
@@ -897,14 +900,13 @@ def main():
             if e_conf:
                 global plasmasaver_config_file_path
                 plasmasaver_config_file_path = args.config_file
-        save_profile(args.profile_name, list_of_profiles, force=args.force, include_sddm=args.include_sddm, include_global=args.include_global, sddm_only=args.sddm_only)
+        save_profile(args.profile_name, list_of_profiles, force=args.force, include_sddm=args.include_sddm,
+                     include_global=args.include_global, sddm_only=args.sddm_only)
     elif args.action == 'remove':
         remove_profile(args.profile_name, list_of_profiles, length_of_lop)
 
-
     elif args.action == 'list':
         list_profiles(list_of_profiles, length_of_lop)
-
 
     elif args.action == 'apply':
         if args.password and args.skip_sudo:
@@ -915,8 +917,8 @@ def main():
             sudo_pass = args.password
         if (args.sddm_only and args.skip_sddm) or (args.sddm_only and args.skip_global):
             raise Exception('error: --sddm-only can\'t be used with --include-sddm and --include-global')
-        apply_profile(args.profile_name, list_of_profiles, length_of_lop, skip_sddm=args.skip_sddm, skip_global=args.skip_global, sddm_only=args.sddm_only)
-
+        apply_profile(args.profile_name, list_of_profiles, length_of_lop, skip_sddm=args.skip_sddm,
+                      skip_global=args.skip_global, sddm_only=args.sddm_only)
 
     elif args.action == 'import':
         if args.password and args.skip_sudo:
@@ -929,8 +931,8 @@ def main():
             raise Exception('error: --sddm-only can\'t be used with --include-sddm and --include-global')
         if args.data_only and args.config_only:
             raise Exception('error: --data-only and --config-only can\'t be used at the same time')
-        import_profile(args.profile_name, skip_global=args.skip_global, skip_sddm=args.skip_sddm, sddm_only=args.sddm_only, config_only=args.config_only, data_only=args.data_only)
-
+        import_profile(args.profile_name, skip_global=args.skip_global, skip_sddm=args.skip_sddm,
+                       sddm_only=args.sddm_only, config_only=args.config_only, data_only=args.data_only)
 
     elif args.action == 'export':
         if args.password and args.skip_sudo:
@@ -943,16 +945,15 @@ def main():
             raise Exception('error: --sddm-only can\'t be used with --include-sddm and --include-global')
         if args.data_only and args.config_only:
             raise Exception('error: --data-only and --config-only can\'t be used at the same time')
-        export(args.profile_name, list_of_profiles, length_of_lop, skip_global=args.skip_global, skip_sddm=args.skip_sddm, sddm_only=args.sddm_only, config_only=args.config_only, data_only=args.data_only)
-
+        export(args.profile_name, list_of_profiles, length_of_lop, skip_global=args.skip_global,
+               skip_sddm=args.skip_sddm, sddm_only=args.sddm_only, config_only=args.config_only,
+               data_only=args.data_only)
 
     elif args.version:
         print(f"plasmasaver: {version}")
 
-
     elif args.action == 'wipe':
         wipe()
-
 
     else:
         parser.print_help()

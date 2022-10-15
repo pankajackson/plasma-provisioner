@@ -38,6 +38,11 @@
         become: true
         with_items: "{{ applications.snap }}"
 
+      - name: Applications | Installation | Pip packages
+        pip:
+          name: "{{ item }}"
+        with_items: "{{ applications.pip }}"
+
       - name: Applications | Installation | helmfile
         shell: |
           # install helm
