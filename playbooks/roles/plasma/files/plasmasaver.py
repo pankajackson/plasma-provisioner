@@ -221,23 +221,23 @@ def exception_handler(func):
 
 
 def ends_with(grouped_regex, path) -> str:
-    occurence = re.search(grouped_regex, path).group()
-    dirs = os.listdir(path[0: path.find(occurence)])
-    ends_with_text = re.search(grouped_regex, occurence).group(2)
+    occurrence = re.search(grouped_regex, path).group()
+    dirs = os.listdir(path[0: path.find(occurrence)])
+    ends_with_text = re.search(grouped_regex, occurrence).group(2)
     for directory in dirs:
         if directory.endswith(ends_with_text):
-            return path.replace(occurence, directory)
-    return occurence
+            return path.replace(occurrence, directory)
+    return occurrence
 
 
 def begins_with(grouped_regex, path) -> str:
-    occurence = re.search(grouped_regex, path).group()
-    dirs = os.listdir(path[0: path.find(occurence)])
-    ends_with_text = re.search(grouped_regex, occurence).group(2)
+    occurrence = re.search(grouped_regex, path).group()
+    dirs = os.listdir(path[0: path.find(occurrence)])
+    ends_with_text = re.search(grouped_regex, occurrence).group(2)
     for directory in dirs:
         if directory.startswith(ends_with_text):
-            return path.replace(occurence, directory)
-    return occurence
+            return path.replace(occurrence, directory)
+    return occurrence
 
 
 def parse_keywords(tokens_, token_symbol, parsed):
@@ -258,11 +258,11 @@ def parse_functions(tokens_, token_symbol, parsed):
     for item in parsed:
         for name in parsed[item]:
             location = parsed[item][name]["location"]
-            occurences = re.findall(raw_regex, location)
-            if not occurences:
+            occurrences = re.findall(raw_regex, location)
+            if not occurrences:
                 continue
-            for occurence in occurences:
-                func = re.search(grouped_regex, occurence).group(1)
+            for occurrence in occurrences:
+                func = re.search(grouped_regex, occurrence).group(1)
                 if func in functions["dict"]:
                     parsed[item][name]["location"] = functions["dict"][func](
                         grouped_regex, location
