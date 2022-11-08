@@ -341,7 +341,7 @@ def copy(source, dest):
 
     if not os.path.exists(dest):
         try:
-            os.mkdir(dest)
+            os.makedirs(dest)
         except PermissionError:
             command = 'mkdir -p %s' % dest
             if sudo_pass:
