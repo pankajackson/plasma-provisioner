@@ -45,7 +45,6 @@
       - fortune
       - cowsay
       - neofetch
-      - kubectl
       - terraform
       - docker-ce
       - docker-ce-cli
@@ -62,7 +61,6 @@
       - zip
       - unzip
       - okular
-      - awscli
       - smplayer
       - vlc
       - mpv
@@ -75,12 +73,21 @@
     snap:
       - name: spotify
         classic: no
+#      - name: kontena-lens
+#        classic: no
+      - name: kubectl
+        classic: yes
     pip:
       - kube-shell
+      # instaloader michael_jackson.fan --stories --highlights --tagged --igtv -l myusername -p 'mypassword'
       - instaloader
+      # bdfr download . --subreddit 'useracc1, useracc2, useracc3' --search 'Michael, michael, michael_jackson, Michael_Jackson' -L 100
+      # bdfr download . --subreddit all --search 'Michael, michael' -L 100
+      - bdfr
+      - awscli
     helm_version: "v3.9.0"
     helmfile_version: "v0.144.0"
-    sops_version: "3.7.1"
+    sops_version: "3.7.3"
     helm_secrets_version: "3.12.0"
 
   host:

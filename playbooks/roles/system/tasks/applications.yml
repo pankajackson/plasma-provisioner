@@ -41,6 +41,7 @@
       - name: Applications | Installation | Pip packages
         pip:
           name: "{{ item }}"
+          state: latest
         with_items: "{{ applications.pip }}"
 
       - name: Applications | Installation | helmfile
@@ -60,6 +61,11 @@
           # install helmfile
           curl -o /bin/helmfile -L https://github.com/roboll/helmfile/releases/download/{{ applications.helmfile_version }}/helmfile_linux_amd64
           chmod +x /bin/helmfile
+        become: true
+
+      - name: Applications | Installation | sops plugin
+        apt:
+          deb: https://github.com/mozilla/sops/releases/download/v{{ applications.sops_version }}/sops_{{ applications.sops_version }}_amd64.deb
         become: true
 
       - name: Applications | Installation | helm plugins
