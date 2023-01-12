@@ -26,5 +26,5 @@ orchis:
     file: "Orchis.plsv"
     path: "/tmp/plasma_profiles/"
     url: "https://mega.nz/file/3ThlSCpC#538LT3Ufd8pP9qhh5cLpA7kqSDfD2gpb_Ht0JJP4KD4"
-    checksum: 7de2eee924fb80021415b9cc6c65dc46
+    checksum: 35c74176ec4dfcaed79e40b13b99f454
     checksum_algorithm: md5

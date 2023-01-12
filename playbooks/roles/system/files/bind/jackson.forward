@@ -13,6 +13,7 @@ $TTL	604800
 @	IN	A	10.0.0.1
 www	IN	CNAME	jackson.com.
 kube	IN	A	10.0.0.10
+storage	IN	A	10.0.0.20
 kubeworker01	IN	A	10.0.0.11
 kubeworker02	IN	A	10.0.0.12
 kubeworker03	IN	A	10.0.0.13
@@ -34,3 +35,7 @@ notary	IN	CNAME	ingress.jackson.com.
 hub	IN	CNAME	ingress.jackson.com.
 grafana	IN	CNAME	ingress.jackson.com.
 prometheus	IN	CNAME	ingress.jackson.com.
+dev.dapp	IN	CNAME	ingress.jackson.com.
+stage.dapp	IN	CNAME	ingress.jackson.com.
+preprod.dapp	IN	CNAME	ingress.jackson.com.
+dapp	IN	CNAME	ingress.jackson.com.
