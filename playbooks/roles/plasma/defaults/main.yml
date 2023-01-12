@@ -19,10 +19,12 @@ orchis:
     - latte-dock
     - conky-all
     - zsh
+    - xclip
+    - fonts-powerline
   profile:
-    name: "Orchis-with-sddm-local"
-    file: "Orchis-with-sddm-local.plsv"
+    name: "Orchis"
+    file: "Orchis.plsv"
     path: "/tmp/plasma_profiles/"
-    url: "https://mega.nz/file/mDoGkJxC#SiLxPSOYOBYLEDnP-PuxpVUWeKxtGHDIvyES1cTXZBE"
-    checksum: 16ad6f9c1fc025e2f7ab794988a4ed72
+    url: "https://mega.nz/file/3ThlSCpC#538LT3Ufd8pP9qhh5cLpA7kqSDfD2gpb_Ht0JJP4KD4"
+    checksum: 7de2eee924fb80021415b9cc6c65dc46
     checksum_algorithm: md5

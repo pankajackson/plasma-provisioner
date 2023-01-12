@@ -25,11 +25,25 @@
 
   - name: Applications | Installation
     block:
+      - name: Applications | Update | APT Existing Apps
+        apt:
+          upgrade: yes
+          update_cache: yes
+        become: true
+        register: result
+        until: "result is not failed"
+        retries: 5
+        delay: 10
+
       - name: Applications | Installation | APT Apps
         apt:
           pkg: "{{ applications.apps }}"
           update_cache: yes
         become: true
+        register: result
+        until: "result is not failed"
+        retries: 5
+        delay: 10
 
       - name: Applications | Installation | Snap Apps
         snap:
@@ -37,12 +51,20 @@
           classic: "{{ item.classic }}"
         become: true
         with_items: "{{ applications.snap }}"
+        register: result
+        until: "result is not failed"
+        retries: 5
+        delay: 10
 
       - name: Applications | Installation | Pip packages
         pip:
           name: "{{ item }}"
           state: latest
         with_items: "{{ applications.pip }}"
+        register: result
+        until: "result is not failed"
+        retries: 5
+        delay: 10
 
       - name: Applications | Installation | helmfile
         shell: |
@@ -67,6 +89,10 @@
         apt:
           deb: https://github.com/mozilla/sops/releases/download/v{{ applications.sops_version }}/sops_{{ applications.sops_version }}_amd64.deb
         become: true
+        register: result
+        until: "result is not failed"
+        retries: 5
+        delay: 10
 
       - name: Applications | Installation | helm plugins
         shell: |

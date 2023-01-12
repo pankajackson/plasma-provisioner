@@ -6,6 +6,10 @@
           pkg: "{{ orchis.apps }}"
           update_cache: yes
         become: true
+        register: result
+        until: "result is not failed"
+        retries: 5
+        delay: 10
 
   - name: Orchis | Binary
     block:
