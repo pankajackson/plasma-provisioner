@@ -1,2 +1,5 @@
 ---
-# handlers file for plasma
+  - name: Update grub
+    shell: update-grub
+    become: true
+    listen: "update grub"

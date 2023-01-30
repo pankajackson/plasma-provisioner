@@ -28,3 +28,8 @@ orchis:
     url: "https://mega.nz/file/fPpwzKwS#2iFhGzmP6W3Ym1o2t0pEsY4_SYvGv1SINbO6S9PsTxw"
     checksum: 35c74176ec4dfcaed79e40b13b99f454
     checksum_algorithm: md5
+grub2_themes:
+  release: '2022-10-30'
+  theme: 'vimix' # [tela|vimix|stylish|whitesur]
+  screen: '1080p' # [1080p|2k|4k|ultrawide|ultrawide2k]
+  tmp_path: '/tmp/grub2_themes'

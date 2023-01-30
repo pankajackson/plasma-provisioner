@@ -3,3 +3,5 @@
     include_tasks: host.yml
   - name: Orchis Theme Setup
     include_tasks: orchis.yml
+  - name: Grub Theme Setup
+    include_tasks: grub.yml

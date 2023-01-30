@@ -1,0 +1,34 @@
+---
+  - name: Grub2 | Theme
+    block:
+      - name: Grub2 | Theme | Create TMP Directory
+        file:
+          path: "{{ grub2_themes.tmp_path }}"
+          state: directory
+      - name: Grub2 | Theme | Download
+        unarchive:
+          src: "https://github.com/vinceliuice/grub2-themes/archive/refs/tags/{{grub2_themes.release}}.tar.gz"
+          dest: "{{ grub2_themes.tmp_path }}"
+          remote_src: yes
+      - name: Grub2 | Theme | Disable GRUB_TIMEOUT_STYLE
+        lineinfile:
+          path: /etc/default/grub
+          state: present
+          regexp: '(?i)^(GRUB_TIMEOUT_STYLE.*)'
+          line: '# \1'
+          backrefs: true
+          backup: true
+        become: true
+      - name: Grub2 | Theme | Set Timeout to 5 sec
+        lineinfile:
+          path: /etc/default/grub
+          state: present
+          regexp: '(?i)^(GRUB_TIMEOUT.*)'
+          line: 'GRUB_TIMEOUT=5'
+        become: true
+      - name: Grub | Tela Theme | Install
+        shell: "./install.sh -t {{ grub2_themes.theme }} -s {{ grub2_themes.screen }}"
+        args:
+          chdir: "{{ grub2_themes.tmp_path }}/grub2-themes-{{grub2_themes.release}}"
+        become: true
+        notify: "update grub"
