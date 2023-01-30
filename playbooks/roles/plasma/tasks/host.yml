@@ -1,15 +1,9 @@
 ---
   - name: Host Setup | Plasmasaver
     block:
-      - name: Host Setup | Plasmasaver | Install pip dependencies
-        pip:
-          name: pyyaml
       - name: Host Setup | Plasmasaver | Install Plasmasaver
-        copy:
-          src: plasmasaver.py
-          dest: /usr/bin/plasmasaver
-          mode: a+x
-          backup: yes
+        pip:
+          name: plasmasaver
         become: true
       - name: Host Setup | Plasmasaver | Save Default Profile
         shell: "plasmasaver save -e kde default"
