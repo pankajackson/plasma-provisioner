@@ -31,5 +31,5 @@ orchis:
 grub2_themes:
   release: '2022-10-30'
   theme: 'vimix' # [tela|vimix|stylish|whitesur]
-  screen: '1080p' # [1080p|2k|4k|ultrawide|ultrawide2k]
+  screen: '2k' # [1080p|2k|4k|ultrawide|ultrawide2k]
   tmp_path: '/tmp/grub2_themes'
