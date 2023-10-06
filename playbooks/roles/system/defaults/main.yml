@@ -65,6 +65,9 @@
       - vlc
       - mpv
       - bashtop
+      - nvtop #GPU Monitor
+      - ncdu
+      - kdenlive
 
 #      - virtualbox
 #      - virtualbox-dkms
@@ -76,6 +79,8 @@
 #      - name: kontena-lens
 #        classic: no
       - name: kubectl
+        classic: yes
+      - name: shotcut
         classic: yes
     pip:
       - kube-shell
