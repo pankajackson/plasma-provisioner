@@ -68,6 +68,7 @@
       - nvtop #GPU Monitor
       - ncdu
       - kdenlive
+      - bash-completion # autocomplete kubectl by tab press 
 
 #      - virtualbox
 #      - virtualbox-dkms
@@ -80,8 +81,12 @@
 #        classic: no
       - name: kubectl
         classic: yes
-      - name: shotcut
+      - name: shotcut # Video Editor 
         classic: yes
+      - name: prospect-mail # Outlook
+        classic: no
+      - name: yq # cli YAML processor
+        classic: no
     pip:
       - kube-shell
       # instaloader michael_jackson.fan --stories --highlights --tagged --igtv -l myusername -p 'mypassword'
@@ -90,6 +95,7 @@
       # bdfr download . --subreddit all --search 'Michael, michael' -L 100
       - bdfr
       - awscli
+      - saws # AWS CLI Advancement
     helm_version: "v3.9.0"
     helmfile_version: "v0.144.0"
     sops_version: "3.7.3"

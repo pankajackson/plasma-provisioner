@@ -11,6 +11,7 @@ $TTL	604800
 ;
 @	IN	NS	jackson.com.
 @	IN	A	10.0.0.1
+@	IN	A	192.168.1.5
 www	IN	CNAME	jackson.com.
 kube	IN	A	10.0.0.10
 storage	IN	A	10.0.0.20
@@ -23,19 +24,4 @@ kube-worker02-210001	IN	CNAME	kubeworker02.jackson.com.
 kube-worker03-310001	IN	CNAME	kubeworker03.jackson.com.
 ingress	IN	A	10.0.0.200
 shipper	IN	A	10.0.0.201
-kubeboard	IN	CNAME	ingress.jackson.com.
-es	IN	CNAME	ingress.jackson.com.
-kb	IN	CNAME	ingress.jackson.com.
-grafana	IN	CNAME	ingress.jackson.com.
-prometheus IN	CNAME   ingress.jackson.com.
-kubeapps IN	CNAME	ingress.jackson.com.
-soul	IN	CNAME	ingress.jackson.com.
-core	IN	CNAME	ingress.jackson.com.
-notary	IN	CNAME	ingress.jackson.com.
-hub	IN	CNAME	ingress.jackson.com.
-grafana	IN	CNAME	ingress.jackson.com.
-prometheus	IN	CNAME	ingress.jackson.com.
-dev.dapp	IN	CNAME	ingress.jackson.com.
-stage.dapp	IN	CNAME	ingress.jackson.com.
-preprod.dapp	IN	CNAME	ingress.jackson.com.
-dapp	IN	CNAME	ingress.jackson.com.
+*	IN	CNAME	ingress.jackson.com.
