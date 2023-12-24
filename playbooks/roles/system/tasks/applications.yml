@@ -70,8 +70,11 @@
         apt:
           deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         become: true
+        register: result
+        until: "result is not failed"
         retries: 5
         delay: 10
+        ignore_errors: true
 
       - name: Applications | Installation | helmfile
         shell: |
@@ -91,6 +94,11 @@
           curl -o /bin/helmfile -L https://github.com/roboll/helmfile/releases/download/{{ applications.helmfile_version }}/helmfile_linux_amd64
           chmod +x /bin/helmfile
         become: true
+        register: result
+        until: "result is not failed"
+        retries: 5
+        delay: 10
+        ignore_errors: true
 
       - name: Applications | Installation | sops plugin
         apt:

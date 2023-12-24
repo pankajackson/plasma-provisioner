@@ -175,7 +175,7 @@
         register: zsh_bin
 
       - name: Orchis | User | Update Shell
-        become: yes
+        become: true
         user:
           name: "{{ ansible_env.USER }}"
           shell: "{{ zsh_bin.stdout }}"

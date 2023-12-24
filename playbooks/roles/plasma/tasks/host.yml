@@ -10,7 +10,6 @@
 
   - name: Host Setup | PSLV Profile Downloader
     block:
-
       - name: Host Setup | PSLV Profile Downloader | Install
         apt:
           pkg: "megatools"
