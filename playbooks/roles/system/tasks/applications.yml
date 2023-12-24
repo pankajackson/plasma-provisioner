@@ -66,6 +66,13 @@
         retries: 5
         delay: 10
 
+      - name: Applications | Installation | Google chrome stable
+        apt:
+          deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        become: true
+        retries: 5
+        delay: 10
+
       - name: Applications | Installation | helmfile
         shell: |
           # install helm
