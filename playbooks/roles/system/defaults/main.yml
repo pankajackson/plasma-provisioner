@@ -1,112 +1,139 @@
 ---
 # defaults file for basic
-  applications:
-    repos:
-      - gpgurl: "https://download.docker.com/linux/ubuntu/gpg"
-        keyring: "/etc/apt/keyrings/docker.gpg"
-        repo: "deb [arch={{ deb_architecture.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-        filename: "/etc/apt/sources.list.d/docker"
-      - gpgurl: "https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key"
-        keyring: "/etc/apt/keyrings/kubernetes-apt-keyring.gpg"
-        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
-        filename: "/etc/apt/sources.list.d/kubernetes"
-      - gpgurl: "https://apt.releases.hashicorp.com/gpg"
-        keyring: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
-        repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
-        filename: "/etc/apt/sources.list.d/hashicorp"
-    apps:
-      - python3
-      - python3-pip
-      - python-is-python3
-      - net-tools
-      - dnsutils
-      - iputils-ping
-      - bind9
-      - openssh-server
-      - openssh-client
-      - resolvconf
-      - vim
-      - git
-      - apt-transport-https
-      - ca-certificates
-      - gnupg
-      - software-properties-common
-      - curl
-      - gcp
-      - htop
-      - cmatrix
-      - toilet
-      - lolcat
-      - barrier
-      - figlet
-      - fortune
-      - cowsay
-      - neofetch
-      - terraform
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-compose-plugin
-      - snapd
-      - keepassxc
-      - pinta
-      - krita
-      - yakuake
-      - plasma-workspace-wallpapers
-      - rar
-      - unrar
-      - zip
-      - unzip
-      - okular
-      - smplayer
-      - vlc
-      - mpv
-      - libc++-12-dev # Citrix Workspace requires this package for some reason
-      - libunwind-12  # Citrix Workspace requires this package for sharing audio Device
-      - nvtop #GPU Monitor
-      - ncdu
-      - kdenlive
-      - bash-completion # autocomplete kubectl by tab press 
-      - nfs-common 
-      - nfs-kernel-server
+applications:
+  repos:
+    - gpgurl: "https://download.docker.com/linux/ubuntu/gpg"
+      keyring: "/etc/apt/keyrings/docker.gpg"
+      repo: "deb [arch={{ deb_architecture.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+      filename: "/etc/apt/sources.list.d/docker"
+    - gpgurl: "https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key"
+      keyring: "/etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+      repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
+      filename: "/etc/apt/sources.list.d/kubernetes"
+    - gpgurl: "https://apt.releases.hashicorp.com/gpg"
+      keyring: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
+      repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+      filename: "/etc/apt/sources.list.d/hashicorp"
+  apps:
+    - python3
+    - python3-pip
+    - python-is-python3
+    - net-tools
+    - dnsutils
+    - iputils-ping
+    - bind9
+    - openssh-server
+    - openssh-client
+    - resolvconf
+    - vim
+    - git
+    - apt-transport-https
+    - ca-certificates
+    - gnupg
+    - software-properties-common
+    - curl
+    - mlocate
+    - gcp
+    - htop
+    - cmatrix
+    - toilet
+    - lolcat
+    - barrier
+    - figlet
+    - fortune
+    - cowsay
+    - neofetch
+    - terraform
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-compose-plugin
+    - snapd
+    - keepassxc
+    - pinta
+    - krita
+    - yakuake
+    - plasma-workspace-wallpapers
+    - rar
+    - unrar
+    - zip
+    - unzip
+    - okular
+    - smplayer
+    - vlc
+    - mpv
+    - libc++-12-dev # Citrix Workspace requires this package for some reason
+    - libunwind-12 # Citrix Workspace requires this package for sharing audio Device
+    - nvtop #GPU Monitor
+    - ncdu
+    - kdenlive
+    - bash-completion # autocomplete kubectl by tab press
+    - nfs-common
+    - nfs-kernel-server
 
-#      - virtualbox
-#      - virtualbox-dkms
-#      - virtualbox-ext-pack
-      - vagrant
-    snap:
-      - name: spotify
-        classic: no
-      - name: kontena-lens
-        classic: yes
-      - name: kubectl
-        classic: yes
-      - name: shotcut # Video Editor 
-        classic: yes
-      - name: prospect-mail # Outlook
-        classic: no
-      - name: yq # cli YAML processor
-        classic: no
-      - name: bashtop
-        classic: no
-      - name: ktouch
-        classic: no
-    pip:
-      - kube-shell
-      # instaloader michael_jackson.fan --stories --highlights --tagged --igtv -l myusername -p 'mypassword'
-      - instaloader
-      # bdfr download . --subreddit 'useracc1, useracc2, useracc3' --search 'Michael, michael, michael_jackson, Michael_Jackson' -L 100
-      # bdfr download . --subreddit all --search 'Michael, michael' -L 100
-      - bdfr
-      - awscli
-      - saws # AWS CLI Advancement
-    helm_version: "v3.9.0"
-    helmfile_version: "v0.144.0"
-    sops_version: "3.7.3"
-    helm_secrets_version: "3.12.0"
+    #      - virtualbox
+    #      - virtualbox-dkms
+    #      - virtualbox-ext-pack
+    - vagrant
+  snap:
+    - name: spotify
+      classic: no
+    - name: kontena-lens
+      classic: yes
+    - name: kubectl
+      classic: yes
+    - name: shotcut # Video Editor
+      classic: yes
+    - name: prospect-mail # Outlook
+      classic: no
+    - name: yq # cli YAML processor
+      classic: no
+    - name: bashtop
+      classic: no
+    - name: ktouch
+      classic: no
+  pip:
+    - kube-shell
+    # instaloader michael_jackson.fan --stories --highlights --tagged --igtv -l myusername -p 'mypassword'
+    - instaloader
+    # bdfr download . --subreddit 'useracc1, useracc2, useracc3' --search 'Michael, michael, michael_jackson, Michael_Jackson' -L 100
+    # bdfr download . --subreddit all --search 'Michael, michael' -L 100
+    - bdfr
+    - awscli
+    - saws # AWS CLI Advancement
+  helm_version: "v3.9.0"
+  helmfile_version: "v0.144.0"
+  sops_version: "3.7.3"
+  helm_secrets_version: "3.12.0"
 
-  host:
-    hostname: jackson.com
+host:
+  hostname: jackson.com
 
-  docker:
-    data_dir: "/var/lib/docker"
+docker:
+  data_dir: "/var/lib/docker"
+
+distrobox:
+  directory: "/opt/distrobox"
+  alias: osswitch
+  common_packages:
+    - git
+    - vim
+  boxes:
+    - name: redhat
+      image: registry.access.redhat.com/ubi9/ubi
+      additional_packages: []
+    - name: ubuntu
+      image: ubuntu
+      additional_packages: []
+    - name: fedora
+      image: fedora
+      additional_packages: []
+    - name: amazonlinux
+      image: amazonlinux
+      additional_packages: []
+    - name: kalilinux
+      image: kalilinux/kali-rolling
+      additional_packages: []
+    - name: archlinux
+      image: archlinux
+      additional_packages: []

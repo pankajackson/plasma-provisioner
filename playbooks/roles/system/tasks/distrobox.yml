@@ -1,0 +1,41 @@
+---
+- name: DistroBox Setup | Create Directory
+  file:
+    path: "{{ distrobox.directory }}"
+    state: directory
+    mode: 0755
+    owner: "{{ ansible_user_id }}"
+  become: true
+
+- name: DistroBox Setup | Install
+  shell: curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix {{ distrobox.directory }}
+  args:
+    executable: /bin/bash
+
+- name: DistroBox Setup | Create bin Symbolic link
+  file:
+    src: "{{ distrobox.directory }}/bin/distrobox"
+    dest: "{{ distrobox.directory }}/bin/{{ distrobox.alias }}"
+    state: link
+
+- name: DistroBox Setup | Create boxes
+  shell: '{{ distrobox.directory }}/bin/{{ distrobox.alias }} create -n {{ item.name }} -i {{ item.image }} --additional-packages "{{ distrobox.common_packages | join(" ") + item.additional_packages | join(" ") }}" --yes'
+  with_items: "{{ distrobox.boxes }}"
+
+- name: DistroBox Setup | Create Konsole Profiles
+  vars:
+    box: "{{ item }}"
+  template:
+    src: "distrobox/konsole/profile.j2"
+    dest: "~/.local/share/konsole/{{ item.name | title }}Box.profile"
+  with_items:
+    - "{{ distrobox.boxes }}"
+
+- name: DistroBox Setup | Create Konsole Colorscheme
+  vars:
+    box: "{{ item }}"
+  template:
+    src: "distrobox/konsole/colorscheme.j2"
+    dest: "~/.local/share/konsole/{{ item.name | title }}Box.colorscheme"
+  with_items:
+    - "{{ distrobox.boxes }}"
